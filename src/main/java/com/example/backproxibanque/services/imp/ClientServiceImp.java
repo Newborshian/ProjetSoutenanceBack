@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Service
 public class ClientServiceImp implements ClientServices {
     @Autowired
@@ -23,10 +22,10 @@ public class ClientServiceImp implements ClientServices {
         List<Client> clientList = clientRepository.findAll();
 
         if (!clientList.isEmpty()){
-            for(Client  client : clientList ){
-                clientDtoList.add(toDto(client)) ;
-            }
-            return clientDtoList;
+        for(Client  client : clientList ){
+           clientDtoList.add(toDto(client)) ;
+        }
+        return clientDtoList;
         }
         else throw new RuntimeException();
     }
@@ -40,7 +39,7 @@ public class ClientServiceImp implements ClientServices {
         clientDto.setAddress(client.getAddress());
         clientDto.setCity(client.getCity());
         clientDto.setZipcode(client.getZipcode());
-        clientDto.setPhoneNumber(client.getPhonenumber());
+        clientDto.setPhonenumber(client.getPhonenumber());
         clientDto.setIdConseiller(client.getConseiller().getId());
         return clientDto;
     }
@@ -53,19 +52,19 @@ public class ClientServiceImp implements ClientServices {
         newclient.setAddress(clientDto.getAddress());
         newclient.setCity(clientDto.getCity());
         newclient.setZipcode(clientDto.getZipcode());
-        newclient.setPhonenumber(clientDto.getPhoneNumber());
-        if (conseillerRepository.findById(clientDto.getIdConseiller()).isPresent()){
-            newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
-            return clientRepository.saveAndFlush(newclient);}
-        else{
-            throw new RuntimeException("Veuillez affilier un conseiller à ce client");
-        }
+        newclient.setPhonenumber(clientDto.getPhonenumber());
+        if (!conseillerRepository.findById(clientDto.getIdConseiller()).isEmpty()){
+        newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
+        return clientRepository.saveAndFlush(newclient);}
+    else{
+        throw new RuntimeException("Veuillez affilier un conseiller à ce client");
     }
+}
 
     @Override
     public void deleteClientById(Integer id) {
         if (clientRepository.findById(id).isPresent()){
-            clientRepository.deleteById(id);}
+        clientRepository.deleteById(id);}
         else{
             throw new RuntimeException("l'identifiant du client n'a pas été trouvé");
         }
@@ -74,19 +73,19 @@ public class ClientServiceImp implements ClientServices {
     @Override
     public Client updateClient(Integer id, ClientDto clientDto) {
         if (clientRepository.existsById(id)){
-            Client newclient = clientRepository.findById(id).get();
-            newclient.setLastname(clientDto.getLastname());
-            newclient.setFirstname(clientDto.getFirstname());
-            newclient.setAddress(clientDto.getAddress());
-            newclient.setCity(clientDto.getCity());
-            newclient.setZipcode(clientDto.getZipcode());
-            newclient.setPhonenumber(clientDto.getPhoneNumber());
-            if (conseillerRepository.existsById(clientDto.getIdConseiller())){
-                newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
-                return clientRepository.saveAndFlush(newclient);}
-            else{
-                throw new RuntimeException("Veuillez affilier un conseiller à ce client");
-            }}
+        Client newclient = clientRepository.findById(id).get();
+        newclient.setLastname(clientDto.getLastname());
+        newclient.setFirstname(clientDto.getFirstname());
+        newclient.setAddress(clientDto.getAddress());
+        newclient.setCity(clientDto.getCity());
+        newclient.setZipcode(clientDto.getZipcode());
+        newclient.setPhonenumber(clientDto.getPhonenumber());
+        if (conseillerRepository.existsById(clientDto.getIdConseiller())){
+            newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
+            return clientRepository.saveAndFlush(newclient);}
+        else{
+            throw new RuntimeException("Veuillez affilier un conseiller à ce client");
+        }}
         else {
             throw new RuntimeException("l'identifiant du client n'a pas été trouvé");
         }

@@ -6,17 +6,17 @@ import com.example.backproxibanque.entities.Client;
 import java.util.List;
 
 public interface ClientServices {
-    List<ClientDto> getAllClients();
+List<ClientDto> getAllClients();
 
-    ClientDto toDto(Client client);
+ClientDto toDto(Client client);
 
-    Client saveClient(ClientDto clientDto);
+Client saveClient(ClientDto clientDto);
 
-    void  deleteClientById(Integer id );
+void  deleteClientById(Integer id );
 
-    Client updateClient(Integer id, ClientDto clientDto);
+Client updateClient(Integer id, ClientDto clientDto);
 
-    ClientDto getClientById(Integer id);
+ClientDto getClientById(Integer id);
 
 
 

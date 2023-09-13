@@ -33,14 +33,14 @@ class ClientServiceImpTest {
     @Test
     void getAllClients() {
         List<ClientDto> clientDtoList = new ArrayList<>();
-        clientDtoList.add(new ClientDto(1, "Doe", "John", "123 Main St", "New York", 10001, "555-1234", 1));
+        clientDtoList.add(new ClientDto(2, "Smith", "Jane", "456 Elm St", "Los Angeles", 90001, "555-5678", 2));
         assertThat(this.clientServices.getAllClients().get(0).toString()).isEqualTo(clientDtoList.get(0).toString());
     }
 
     @Test
     void toDto() {
-        Client client = new Client(1, "Doe", "John", "123 Main St", "New York", 10001, "555-1234", conseiller);
-        ClientDto clientDto = new ClientDto(1, "Doe", "John", "123 Main St", "New York", 10001, "555-1234", 1);
+        Client client = new Client(1, "Doe", "John", "123 Main St", "Chicago", 10001, "555-1234", conseiller);
+        ClientDto clientDto = new ClientDto(1, "Doe", "John", "123 Main St", "Chicago", 10001, "555-1234", 1);
         assertThat(this.clientServices.toDto(client).toString()).isEqualTo(clientDto.toString());
     }
 }

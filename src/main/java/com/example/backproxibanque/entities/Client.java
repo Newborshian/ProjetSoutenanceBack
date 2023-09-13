@@ -26,7 +26,7 @@ public class Client {
     @Column(name = "zipcode")
     private Integer zipcode;
     @Column(name = "phonenumber")
-    private String phonenumber;
+    private String phoneNumber;
     @ManyToOne
     @JoinColumn(name = "id_conseiller")
     private Conseiller conseiller;

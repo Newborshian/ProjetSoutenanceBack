@@ -39,7 +39,7 @@ public class ClientServiceImp implements ClientServices {
         clientDto.setAddress(client.getAddress());
         clientDto.setCity(client.getCity());
         clientDto.setZipcode(client.getZipcode());
-        clientDto.setPhoneNumber(client.getPhonenumber());
+        clientDto.setPhoneNumber(client.getPhoneNumber());
         clientDto.setIdConseiller(client.getConseiller().getId());
         return clientDto;
     }
@@ -52,8 +52,8 @@ public class ClientServiceImp implements ClientServices {
         newclient.setAddress(clientDto.getAddress());
         newclient.setCity(clientDto.getCity());
         newclient.setZipcode(clientDto.getZipcode());
-        newclient.setPhonenumber(clientDto.getPhoneNumber());
-        if (!conseillerRepository.findById(clientDto.getIdConseiller()).isEmpty()){
+        newclient.setPhoneNumber(clientDto.getPhoneNumber());
+        if (conseillerRepository.findById(clientDto.getIdConseiller()).isPresent()){
         newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
         return clientRepository.saveAndFlush(newclient);}
     else{
@@ -79,7 +79,7 @@ public class ClientServiceImp implements ClientServices {
         newclient.setAddress(clientDto.getAddress());
         newclient.setCity(clientDto.getCity());
         newclient.setZipcode(clientDto.getZipcode());
-        newclient.setPhonenumber(clientDto.getPhoneNumber());
+        newclient.setPhoneNumber(clientDto.getPhoneNumber());
         if (conseillerRepository.existsById(clientDto.getIdConseiller())){
             newclient.setConseiller(conseillerRepository.findById(clientDto.getIdConseiller()).get());
             return clientRepository.saveAndFlush(newclient);}

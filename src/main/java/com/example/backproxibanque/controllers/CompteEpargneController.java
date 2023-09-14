@@ -53,4 +53,32 @@ public class CompteEpargneController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/epargnetocourant")
+    public ResponseEntity<String> virementCompteEpargneToCompteCourant(
+            @RequestParam Integer idCompteCourant,
+            @RequestParam Integer idCompteEpargne,
+            @RequestParam Double somme) {
+        try {
+            compteBancaireServices.virementCompteEpargneToCompteCourant( idCompteEpargne,idCompteCourant, somme);
+            return ResponseEntity.ok("Virement réussi.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors du virement : " + e.getMessage());
+        }
+    }
+
+    @PutMapping("epargnetoepargne")
+    public ResponseEntity<String> virementCompteEpargneToCompteEpargne(
+            @RequestParam Integer idCompteEpargneDebiteur,
+            @RequestParam Integer idCompteEpargneCrediteur,
+            @RequestParam Double somme) {
+        try {
+            compteBancaireServices.virementCompteEpargneToCompteEpargne( idCompteEpargneDebiteur,idCompteEpargneCrediteur, somme);
+            return ResponseEntity.ok("Virement réussi.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors du virement : " + e.getMessage());
+        }
+    }
 }

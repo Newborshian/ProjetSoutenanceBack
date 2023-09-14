@@ -19,4 +19,10 @@ public interface CompteBancaireServices {
     CompteBancaireDto getByIdCompteEpargne(Integer id);
 
     void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme);
+
+    void virementCompteCourantToCourant(Integer idCompteCourantDebiteur, Integer idCompteCourantCrediteur, Double somme);
+
+    void virementCompteEpargneToCompteCourant(Integer idCompteEpargne, Integer idCompteCourant, Double somme);
+
+    void virementCompteEpargneToCompteEpargne(Integer idCompteEpargneDebiteur, Integer idCompteEpargneCrediteur, Double somme);
 }

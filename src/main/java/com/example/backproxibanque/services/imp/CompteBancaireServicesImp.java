@@ -135,19 +135,92 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     @Override
     @Transactional
     public void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme) {
-        CompteCourant compteCourantDebiteur = compteCourantRepository.findById(idCompteCourant).get();
-        CompteEpargne compteEpargneCrediteur = compteEpargneRepository.findById(idCompteEpargne).get();
-        if(compteCourantDebiteur.getSolde() > somme){
-            compteCourantDebiteur.setSolde(compteCourantDebiteur.getSolde() - somme);
-            compteEpargneCrediteur.setSolde(compteEpargneCrediteur.getSolde() + somme);
-            compteCourantRepository.saveAndFlush(compteCourantDebiteur);
-            compteEpargneRepository.saveAndFlush(compteEpargneCrediteur);
+
+        if(compteCourantRepository.existsById(idCompteCourant) && compteCourantRepository.existsById(idCompteEpargne)) {
+
+            CompteCourant compteCourantDebiteur = compteCourantRepository.findById(idCompteCourant).get();
+            CompteEpargne compteEpargneCrediteur = compteEpargneRepository.findById(idCompteEpargne).get();
+            if (compteCourantDebiteur.getSolde() > somme) {
+                compteCourantDebiteur.setSolde(compteCourantDebiteur.getSolde() - somme);
+                compteEpargneCrediteur.setSolde(compteEpargneCrediteur.getSolde() + somme);
+                compteCourantRepository.saveAndFlush(compteCourantDebiteur);
+                compteEpargneRepository.saveAndFlush(compteEpargneCrediteur);
+            } else {
+                throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+            }
         }
         else {
-            throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+            throw new RuntimeException("Identifiants non trouvés");
         }
 
 
+    }
+
+    @Override
+    @Transactional
+
+    public void virementCompteCourantToCourant(Integer idCompteCourantDebiteur, Integer idCompteCourantCrediteur, Double somme) {
+        if(compteCourantRepository.existsById(idCompteCourantDebiteur) && compteCourantRepository.existsById(idCompteCourantCrediteur)) {
+            CompteCourant compteCourantDebiteur = compteCourantRepository.findById(idCompteCourantDebiteur).get();
+            CompteCourant compteCourantCrediteur = compteCourantRepository.findById(idCompteCourantCrediteur).get();
+            if (compteCourantDebiteur.getSolde() > somme) {
+                compteCourantDebiteur.setSolde(compteCourantDebiteur.getSolde() - somme);
+                compteCourantCrediteur.setSolde(compteCourantCrediteur.getSolde() + somme);
+                compteCourantRepository.saveAndFlush(compteCourantDebiteur);
+                compteCourantRepository.saveAndFlush(compteCourantCrediteur);
+            } else {
+                throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+            }
+        }
+        else {
+            throw new RuntimeException("Identifiants non trouvés");
+        }
+
+
+    }
+
+    @Override
+    @Transactional
+    public void virementCompteEpargneToCompteCourant(Integer idCompteEpargne, Integer idCompteCourant, Double somme) {
+        if (compteEpargneRepository.existsById(idCompteEpargne) && compteCourantRepository.existsById(idCompteCourant)){
+            CompteEpargne compteEpargneDebiteur = compteEpargneRepository.findById(idCompteEpargne).get();
+            CompteCourant compteCourantCrediteur = compteCourantRepository.findById(idCompteCourant).get();
+
+            if(compteEpargneDebiteur.getSolde() > somme){
+                compteEpargneDebiteur.setSolde(compteEpargneDebiteur.getSolde() - somme);
+                compteCourantCrediteur.setSolde(compteCourantCrediteur.getSolde() + somme);
+                compteCourantRepository.saveAndFlush(compteCourantCrediteur);
+                compteEpargneRepository.saveAndFlush(compteEpargneDebiteur);
+            }
+            else {
+                throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+            }
+        }
+        else {
+            throw new RuntimeException("Identifiants non retrouvés");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void virementCompteEpargneToCompteEpargne(Integer idCompteEpargneDebiteur, Integer idCompteEpargneCrediteur, Double somme) {
+        if (compteEpargneRepository.existsById(idCompteEpargneDebiteur) && compteEpargneRepository.existsById(idCompteEpargneCrediteur)){
+            CompteEpargne compteEpargneDebiteur = compteEpargneRepository.findById(idCompteEpargneDebiteur).get();
+            CompteEpargne compteEpargneCrediteur = compteEpargneRepository.findById(idCompteEpargneCrediteur).get();
+
+            if(compteEpargneDebiteur.getSolde() > somme){
+                compteEpargneDebiteur.setSolde(compteEpargneDebiteur.getSolde() - somme);
+                compteEpargneCrediteur.setSolde(compteEpargneCrediteur.getSolde() + somme);
+                compteEpargneRepository.saveAndFlush(compteEpargneCrediteur);
+                compteEpargneRepository.saveAndFlush(compteEpargneDebiteur);
+            }
+            else {
+                throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+            }
+        }
+        else {
+            throw new RuntimeException("Identifiants non retrouvés");
+        }
     }
 }
 

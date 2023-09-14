@@ -15,4 +15,6 @@ public interface CompteBancaireServices {
     void  deleteCompteEpargneById(Integer id );
     CompteCourant updateCompteCourant(Integer id, CompteBancaireDto compteBancaireDto);
     CompteEpargne updateCompteEpargne(Integer id, CompteBancaireDto compteBancaireDto);
+    CompteBancaireDto getByIdCompteCourant (Integer id);
+    CompteBancaireDto getByIdCompteEpargne(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.example.backproxibanque.controllers;
 
+import com.example.backproxibanque.dtos.ClientDto;
 import com.example.backproxibanque.dtos.CompteBancaireDto;
 import com.example.backproxibanque.entities.CompteCourant;
 import com.example.backproxibanque.entities.CompteEpargne;
@@ -26,6 +27,15 @@ public class CompteCourantController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<CompteBancaireDto> getCompteCourantById(@PathVariable Integer id){
+        try{
+            return new ResponseEntity<>(compteBancaireServices.getByIdCompteCourant(id), HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCompteCourant(@PathVariable Integer id){
         try{

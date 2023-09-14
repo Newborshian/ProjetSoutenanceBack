@@ -26,6 +26,14 @@ public class CompteEpargneController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<CompteBancaireDto> getCompteEpargneById(@PathVariable Integer id){
+        try{
+            return new ResponseEntity<>(compteBancaireServices.getByIdCompteEpargne(id), HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCompteEpargne(@PathVariable Integer id){
@@ -36,7 +44,6 @@ public class CompteEpargneController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<CompteEpargne> updateCompteEpargne(@PathVariable Integer id, @RequestBody CompteBancaireDto compteBancaireDto){

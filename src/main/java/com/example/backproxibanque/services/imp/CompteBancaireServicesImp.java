@@ -98,7 +98,7 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     @Override
     public CompteEpargne updateCompteEpargne(Integer id, CompteBancaireDto compteBancaireDto) {
         CompteEpargne compteEpargneUpdate = compteEpargneRepository.findById(id).get();
-        if (compteCourantRepository.existsById(id)) {
+        if (compteEpargneRepository.existsById(id)) {
             compteEpargneUpdate.setSolde(compteBancaireDto.getSolde());
             compteEpargneUpdate.setTauxInteret(compteBancaireDto.getTauxInteret());
 
@@ -110,6 +110,26 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         }
 
     }
+
+    @Override
+    public CompteBancaireDto getByIdCompteCourant(Integer id) {
+        CompteCourant compteCourant = compteCourantRepository.findById(id).get();
+        if (compteCourantRepository.findById(id).isPresent()) {
+            return compteCourantToDto(compteCourant);
+        }  else {
+            throw new RuntimeException("l'identifiant du compte courant n'a pas été trouvé");
+        }
     }
+
+    @Override
+    public CompteBancaireDto getByIdCompteEpargne(Integer id) {
+        CompteEpargne compteEpargne = compteEpargneRepository.findById(id).get();
+        if (compteEpargneRepository.findById(id).isPresent()) {
+            return compteEpargneToDto(compteEpargne);
+        }  else {
+            throw new RuntimeException("l'identifiant du compte epargne n'a pas été trouvé");
+        }
+    }
+}
 
 

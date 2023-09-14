@@ -39,9 +39,9 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         CompteBancaireDto compteBancaireDto = new CompteBancaireDto();
         compteBancaireDto.setId(compteEpargne.getId());
         compteBancaireDto.setNumerodecompte(compteEpargne.getNumeroDeCompte());
-        compteBancaireDto.setTypeDeCompte(TypeDeCompte.COURANT.toString());
+        compteBancaireDto.setTypeDeCompte(TypeDeCompte.EPARGNE.toString());
         compteBancaireDto.setSolde(compteEpargne.getSolde());
-        compteBancaireDto.setOverDraft(compteEpargne.getTauxInteret());
+        compteBancaireDto.setTauxInteret(compteEpargne.getTauxInteret());
         compteBancaireDto.setNameClient(compteEpargne.getClient().getLastname() + " " + compteEpargne.getClient().getFirstname());
         return compteBancaireDto;
     }
@@ -65,5 +65,51 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         }
         else throw new RuntimeException("Veuillez affilier des comptes bancaires à ce client");
     }
+
+    @Override
+    public void deleteCompteCourantById(Integer id) {
+        if (compteCourantRepository.findById(id).isPresent()){
+            compteCourantRepository.deleteById(id);}
+        else{
+            throw new RuntimeException("l'identifiant du compte courant n'a pas été trouvé");
+        }
     }
+    public void deleteCompteEpargneById(Integer id) {
+        if (compteEpargneRepository.findById(id).isPresent()){
+            compteEpargneRepository.deleteById(id);}
+        else{
+            throw new RuntimeException("l'identifiant du compte Epargne n'a pas été trouvé");
+        }
+    }
+
+    public CompteCourant updateCompteCourant(Integer id, CompteBancaireDto compteBancaireDto) {
+        CompteCourant compteCourantUpdate = compteCourantRepository.findById(id).get();
+        if (compteCourantRepository.existsById(id)) {
+            compteCourantUpdate.setSolde(compteBancaireDto.getSolde());
+            compteCourantUpdate.setOverdraft(compteBancaireDto.getOverDraft());
+
+            return compteCourantRepository.saveAndFlush(compteCourantUpdate);
+        }
+        else {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+    }
+    @Override
+    public CompteEpargne updateCompteEpargne(Integer id, CompteBancaireDto compteBancaireDto) {
+        CompteEpargne compteEpargneUpdate = compteEpargneRepository.findById(id).get();
+        if (compteCourantRepository.existsById(id)) {
+            compteEpargneUpdate.setSolde(compteBancaireDto.getSolde());
+            compteEpargneUpdate.setTauxInteret(compteBancaireDto.getTauxInteret());
+
+            return compteEpargneRepository.saveAndFlush(compteEpargneUpdate);
+        }
+
+        else {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+    }
+    }
+
 

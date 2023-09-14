@@ -9,6 +9,7 @@ import com.example.backproxibanque.enums.TypeDeCompte;
 import com.example.backproxibanque.repositories.CompteCourantRepository;
 import com.example.backproxibanque.repositories.CompteEpargneRepository;
 import com.example.backproxibanque.services.CompteBancaireServices;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +130,24 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         }  else {
             throw new RuntimeException("l'identifiant du compte epargne n'a pas été trouvé");
         }
+    }
+
+    @Override
+    @Transactional
+    public void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme) {
+        CompteCourant compteCourantDebiteur = compteCourantRepository.findById(idCompteCourant).get();
+        CompteEpargne compteEpargneCrediteur = compteEpargneRepository.findById(idCompteEpargne).get();
+        if(compteCourantDebiteur.getSolde() > somme){
+            compteCourantDebiteur.setSolde(compteCourantDebiteur.getSolde() - somme);
+            compteEpargneCrediteur.setSolde(compteEpargneCrediteur.getSolde() + somme);
+            compteCourantRepository.saveAndFlush(compteCourantDebiteur);
+            compteEpargneRepository.saveAndFlush(compteEpargneCrediteur);
+        }
+        else {
+            throw new RuntimeException("Le solde du compte débiteur est insuffisant");
+        }
+
+
     }
 }
 

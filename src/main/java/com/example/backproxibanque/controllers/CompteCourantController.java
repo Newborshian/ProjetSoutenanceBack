@@ -57,5 +57,37 @@ public class CompteCourantController {
         }
     }
 
+    @PutMapping
+        public ResponseEntity<String> virementCompteCourantToCompteEpargne(
+                @RequestParam Integer idCompteCourant,
+                @RequestParam Integer idCompteEpargne,
+                @RequestParam Double somme) {
+
+            try {
+                compteBancaireServices.virementCompteCourantToCompteEpargne(idCompteCourant, idCompteEpargne, somme);
+                return ResponseEntity.ok("Virement réussi.");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Erreur lors du virement : " + e.getMessage());
+            }
+        }
+
+    @RestController
+    @RequestMapping("/comptes")
+    public class VirementController {
+
+        private final CompteBancaireServices compteBancaireServices;
+
+        @Autowired
+        public VirementController(CompteBancaireServices compteBancaireServices) {
+            this.compteBancaireServices = compteBancaireServices;
+        }
+
+//
+    }
+
+
+
+
 
 }

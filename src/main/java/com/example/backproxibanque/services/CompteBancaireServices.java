@@ -17,4 +17,6 @@ public interface CompteBancaireServices {
     CompteEpargne updateCompteEpargne(Integer id, CompteBancaireDto compteBancaireDto);
     CompteBancaireDto getByIdCompteCourant (Integer id);
     CompteBancaireDto getByIdCompteEpargne(Integer id);
+
+    void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme);
 }

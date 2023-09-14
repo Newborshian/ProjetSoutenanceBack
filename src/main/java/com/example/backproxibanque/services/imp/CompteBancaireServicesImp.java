@@ -10,12 +10,14 @@ import com.example.backproxibanque.repositories.CompteCourantRepository;
 import com.example.backproxibanque.repositories.CompteEpargneRepository;
 import com.example.backproxibanque.services.CompteBancaireServices;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@Slf4j
 public class CompteBancaireServicesImp implements CompteBancaireServices {
 
     @Autowired
@@ -33,6 +35,7 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         compteBancaireDto.setOverDraft(compteCourant.getOverdraft());
         compteBancaireDto.setNameClient(compteCourant.getClient().getLastname() + " " + compteCourant.getClient().getFirstname());
         return compteBancaireDto;
+
     }
 
     @Override
@@ -70,7 +73,9 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     @Override
     public void deleteCompteCourantById(Integer id) {
         if (compteCourantRepository.findById(id).isPresent()){
-            compteCourantRepository.deleteById(id);}
+            compteCourantRepository.deleteById(id);
+            log.info("Le compte : " + id + " a été supprimé");}
+
         else{
             throw new RuntimeException("l'identifiant du compte courant n'a pas été trouvé");
         }

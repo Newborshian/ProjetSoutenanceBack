@@ -46,8 +46,6 @@ public class CompteCourantController {
         }
     }
 
-
-
     @PutMapping("/{id}")
     public ResponseEntity<CompteCourant> updateCompteCourant(@PathVariable Integer id, @RequestBody CompteBancaireDto compteBancaireDto){
         try{

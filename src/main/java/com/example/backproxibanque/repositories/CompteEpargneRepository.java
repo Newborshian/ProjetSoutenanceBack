@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface CompteEpargneRepository extends JpaRepository<CompteEpargne, Integer> {
 
-    List<CompteEpargne> findByClient(@Param("id_client") Integer idClient);
+    List<CompteEpargne> findByClient_Id(Integer idClient);
 }

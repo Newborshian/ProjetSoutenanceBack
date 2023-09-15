@@ -71,10 +71,10 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     }
 
     @Override
-    public List<CompteBancaireDto> getByIdClientComptesBancaires(ClientDto clientDto) {
+    public List<CompteBancaireDto> getByIdClientComptesBancaires(Integer clientDto) {
         List<CompteBancaireDto> compteBancaireDtoList = new ArrayList<>();
-        List<CompteCourant> compteCourantList = compteCourantRepository.findByClient(clientDto.getId());
-        List<CompteEpargne> compteEpargneList = compteEpargneRepository.findByClient(clientDto.getId());
+        List<CompteCourant> compteCourantList = compteCourantRepository.findByClient_Id(clientDto);
+        List<CompteEpargne> compteEpargneList = compteEpargneRepository.findByClient_Id(clientDto);
 
         if (!compteEpargneList.isEmpty() || !compteCourantList.isEmpty()){
             if (!compteCourantList.isEmpty()){

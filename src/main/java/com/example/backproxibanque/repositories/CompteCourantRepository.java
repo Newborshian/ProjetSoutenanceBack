@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CompteCourantRepository extends JpaRepository<CompteCourant, Integer> {
 
-    List<CompteCourant> findByClient(@Param("id_client") Integer idClient);
+    List<CompteCourant> findByClient_Id(Integer idClient);
 
 
 

@@ -22,4 +22,8 @@ public class Conseiller {
     private String lastname;
     @Column(name = "firstname")
     private String firstName;
+    @Column(name = "mail")
+    private String mail;
+    @Column(name = "password")
+    private String password;
 }

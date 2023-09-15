@@ -14,5 +14,5 @@ public class ConseillerDto {
     private Integer id;
     private String lastname;
     private String firstName;
-    private List<Client> clientList;
+    private List<ClientDto> clientList;
 }

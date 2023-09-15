@@ -22,9 +22,9 @@ public class ClientController {
     private ClientRepository clientRepository;
 
     @GetMapping
-    public ResponseEntity<List<ClientDto>> getAllClient(){
+    public ResponseEntity<List<ClientDto>> getAllClient(@RequestParam("id") Integer id){
         try{
-            return new ResponseEntity<>(clientServices.getAllClients(), HttpStatus.OK);
+            return new ResponseEntity<>(clientServices.getAllClients(id), HttpStatus.OK);
         } catch (RuntimeException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

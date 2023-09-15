@@ -3,6 +3,7 @@ package com.example.backproxibanque.services.imp;
 import com.example.backproxibanque.dtos.ConseillerDto;
 import com.example.backproxibanque.entities.Client;
 import com.example.backproxibanque.entities.Conseiller;
+import com.example.backproxibanque.models.ConseillerIdendification;
 import com.example.backproxibanque.repositories.ClientRepository;
 import com.example.backproxibanque.repositories.ConseillerRepository;
 import com.example.backproxibanque.services.ClientServices;
@@ -21,29 +22,24 @@ public class ConseillerServicesImp implements ConseillerServices {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private ClientServices clientServices;
+
     @Override
     public ConseillerDto toDto(Conseiller conseiller) {
         ConseillerDto conseillerDto = new ConseillerDto();
         conseillerDto.setId(conseiller.getId());
         conseillerDto.setLastname(conseiller.getLastname());
         conseillerDto.setFirstName(conseiller.getFirstName());
-        conseillerDto.setClientList(clientRepository.findByConseiller(conseiller));
+        conseillerDto.setClientList(clientServices.createList(clientRepository.findByConseiller(conseiller)));
         return conseillerDto;
     }
 
     @Override
-    public Integer loginConseiller(String lastname, String firstname) {
-        if (conseillerRepository.existsByLastnameAndFirstName(lastname, firstname)){
-            return 1;
+    public ConseillerDto login(ConseillerIdendification conseillerIdendification) {
+        if (conseillerRepository.existsByMail(conseillerIdendification.getMail())){
+            ConseillerDto conseillerDto = toDto(conseillerRepository.findByMailAndPassword(conseillerIdendification.getMail(), conseillerIdendification.getPassword()));
+           return conseillerDto;
         } else throw new RuntimeException("Conseillé non trouvé");
     }
-
-    @Override
-    public List<Client> getInfoForLogged(String lastname, String firstname) {
-        Conseiller conseiller = conseillerRepository.findByLastnameAndFirstName(lastname, firstname);
-        ConseillerDto conseillerDto = this.toDto(conseiller);
-        return conseillerDto.getClientList();
-    }
-
-
 }

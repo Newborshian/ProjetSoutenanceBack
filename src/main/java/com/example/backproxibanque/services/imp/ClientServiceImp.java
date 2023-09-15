@@ -2,9 +2,11 @@ package com.example.backproxibanque.services.imp;
 
 import com.example.backproxibanque.dtos.ClientDto;
 import com.example.backproxibanque.entities.Client;
+import com.example.backproxibanque.entities.Conseiller;
 import com.example.backproxibanque.repositories.ClientRepository;
 import com.example.backproxibanque.repositories.ConseillerRepository;
 import com.example.backproxibanque.services.ClientServices;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +19,11 @@ public class ClientServiceImp implements ClientServices {
     @Autowired
     private ConseillerRepository conseillerRepository;
     @Override
-    public List<ClientDto> getAllClients() {
-        List<ClientDto> clientDtoList = new ArrayList<>();
-        List<Client> clientList = clientRepository.findAll();
+    public List<ClientDto> getAllClients(Integer id) {
+        Conseiller conseiller = conseillerRepository.findById(id).get();
+        List<Client> clientList = clientRepository.findByConseiller(conseiller);
 
-        if (!clientList.isEmpty()){
-        for(Client  client : clientList ){
-           clientDtoList.add(toDto(client)) ;
-        }
-        return clientDtoList;
-        }
-        else throw new RuntimeException();
+        return createList(clientList);
     }
 
     @Override
@@ -99,5 +95,14 @@ public class ClientServiceImp implements ClientServices {
         }  else {
             throw new RuntimeException("l'identifiant du client n'a pas été trouvé");
         }
+    }
+
+    @Override
+    public List<ClientDto> createList(List<Client> clientList) {
+        List<ClientDto> clientDtoList = new ArrayList<>();
+        for (Client client : clientList){
+            clientDtoList.add(toDto(client));
+        }
+        return clientDtoList;
     }
 }

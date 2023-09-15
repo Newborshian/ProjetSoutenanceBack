@@ -1,0 +1,50 @@
+Starting BackProxiBanqueApplication using Java 20.0.1 with PID 152024 (C:\dev\intellij\ProjetSoutenanceBack\target\classes started by dyl13 in C:\dev\intellij\ProjetSoutenanceBack)
+No active profile set, falling back to 1 default profile: "default"
+Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+Finished Spring Data repository scanning in 78 ms. Found 4 JPA repository interfaces.
+Initializing ProtocolHandler ["http-nio-8080"]
+Starting service [Tomcat]
+Starting Servlet engine: [Apache Tomcat/10.1.12]
+Initializing Spring embedded WebApplicationContext
+HikariPool-1 - Starting...
+HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4f3e9fbb
+HikariPool-1 - Start completed.
+HHH000204: Processing PersistenceUnitInfo [name: default]
+HHH000412: Hibernate ORM core version 6.2.7.Final
+HHH000406: Using bytecode reflection optimizer
+HHH000021: Bytecode provider name : bytebuddy
+No LoadTimeWeaver setup: ignoring JPA class transformer
+HHH000021: Bytecode provider name : bytebuddy
+HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+Initialized JPA EntityManagerFactory for persistence unit 'default'
+spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+Starting ProtocolHandler ["http-nio-8080"]
+Started BackProxiBanqueApplication in 4.95 seconds (process running for 6.212)
+Closing JPA EntityManagerFactory for persistence unit 'default'
+HikariPool-1 - Shutdown initiated...
+HikariPool-1 - Shutdown completed.
+Starting BackProxiBanqueApplication using Java 20.0.1 with PID 121832 (C:\dev\intellij\ProjetSoutenanceBack\target\classes started by dyl13 in C:\dev\intellij\ProjetSoutenanceBack)
+No active profile set, falling back to 1 default profile: "default"
+Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+Finished Spring Data repository scanning in 101 ms. Found 4 JPA repository interfaces.
+Initializing ProtocolHandler ["http-nio-8080"]
+Starting service [Tomcat]
+Starting Servlet engine: [Apache Tomcat/10.1.12]
+Initializing Spring embedded WebApplicationContext
+HikariPool-1 - Starting...
+HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e900e1a
+HikariPool-1 - Start completed.
+HHH000204: Processing PersistenceUnitInfo [name: default]
+HHH000412: Hibernate ORM core version 6.2.7.Final
+HHH000406: Using bytecode reflection optimizer
+HHH000021: Bytecode provider name : bytebuddy
+No LoadTimeWeaver setup: ignoring JPA class transformer
+HHH000021: Bytecode provider name : bytebuddy
+HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+Initialized JPA EntityManagerFactory for persistence unit 'default'
+spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+Starting ProtocolHandler ["http-nio-8080"]
+Started BackProxiBanqueApplication in 7.241 seconds (process running for 9.127)
+Closing JPA EntityManagerFactory for persistence unit 'default'
+HikariPool-1 - Shutdown initiated...
+HikariPool-1 - Shutdown completed.

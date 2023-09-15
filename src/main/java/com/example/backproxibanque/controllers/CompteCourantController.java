@@ -27,6 +27,16 @@ public class CompteCourantController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/comptesByIdClient")
+    public ResponseEntity<List<CompteBancaireDto>> getAllCompteBancaireByIdClient(@RequestParam Integer id){
+        try{
+            return new ResponseEntity<>(compteBancaireServices.getByIdClientComptesBancaires(id), HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CompteBancaireDto> getCompteCourantById(@PathVariable Integer id){
         try{
@@ -84,23 +94,4 @@ public class CompteCourantController {
                     .body("Erreur lors du virement : " + e.getMessage());
         }
     }
-
-    @RestController
-    @RequestMapping("/comptes")
-    public class VirementController {
-
-        private final CompteBancaireServices compteBancaireServices;
-
-        @Autowired
-        public VirementController(CompteBancaireServices compteBancaireServices) {
-            this.compteBancaireServices = compteBancaireServices;
-        }
-
-//
-    }
-
-
-
-
-
 }

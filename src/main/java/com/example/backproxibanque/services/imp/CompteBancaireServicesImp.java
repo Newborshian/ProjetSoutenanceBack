@@ -71,6 +71,26 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     }
 
     @Override
+    public List<CompteBancaireDto> getByIdClientComptesBancaires(Integer clientDto) {
+        List<CompteBancaireDto> compteBancaireDtoList = new ArrayList<>();
+        List<CompteCourant> compteCourantList = compteCourantRepository.findByClient_Id(clientDto);
+        List<CompteEpargne> compteEpargneList = compteEpargneRepository.findByClient_Id(clientDto);
+
+        if (!compteEpargneList.isEmpty() || !compteCourantList.isEmpty()){
+            if (!compteCourantList.isEmpty()){
+                for(CompteCourant  compteCourant : compteCourantList ){
+                    compteBancaireDtoList.add(compteCourantToDto(compteCourant)) ;
+                }}
+            if (!compteEpargneList.isEmpty()) {
+                for(CompteEpargne  compteEpargne : compteEpargneList ){
+                    compteBancaireDtoList.add(compteEpargneToDto(compteEpargne)) ;
+                }}
+            return compteBancaireDtoList;
+        }
+        else throw new RuntimeException("Veuillez affilier des comptes bancaires à ce client");
+    }
+
+    @Override
     public void deleteCompteCourantById(Integer id) {
         if (compteCourantRepository.findById(id).isPresent()){
             compteCourantRepository.deleteById(id);
@@ -136,6 +156,8 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
             throw new RuntimeException("l'identifiant du compte epargne n'a pas été trouvé");
         }
     }
+
+
 
     @Override
     @Transactional

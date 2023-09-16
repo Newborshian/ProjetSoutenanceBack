@@ -2,8 +2,11 @@ package com.example.backproxibanque.services.imp;
 
 import com.example.backproxibanque.dtos.ClientDto;
 import com.example.backproxibanque.entities.Client;
+import com.example.backproxibanque.entities.CompteCourant;
 import com.example.backproxibanque.entities.Conseiller;
 import com.example.backproxibanque.repositories.ClientRepository;
+import com.example.backproxibanque.repositories.CompteCourantRepository;
+import com.example.backproxibanque.repositories.CompteEpargneRepository;
 import com.example.backproxibanque.repositories.ConseillerRepository;
 import com.example.backproxibanque.services.ClientServices;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -18,6 +21,10 @@ public class ClientServiceImp implements ClientServices {
     private ClientRepository clientRepository;
     @Autowired
     private ConseillerRepository conseillerRepository;
+    @Autowired
+    private CompteEpargneRepository compteEpargneRepository;
+    @Autowired
+    private CompteCourantRepository compteCourantRepository;
     @Override
     public List<ClientDto> getAllClients(Integer id) {
         Conseiller conseiller = conseillerRepository.findById(id).get();
@@ -60,7 +67,10 @@ public class ClientServiceImp implements ClientServices {
     @Override
     public void deleteClientById(Integer id) {
         if (clientRepository.findById(id).isPresent()){
-        clientRepository.deleteById(id);}
+            compteCourantRepository.deleteById(id);
+            compteEpargneRepository.deleteById(id);
+        clientRepository.deleteById(id);
+        }
         else{
             throw new RuntimeException("l'identifiant du client n'a pas été trouvé");
         }
@@ -104,5 +114,11 @@ public class ClientServiceImp implements ClientServices {
             clientDtoList.add(toDto(client));
         }
         return clientDtoList;
+    }
+
+    @Override
+    public List<ClientDto> getClientByName(String name) {
+        List<Client> clientList = clientRepository.findByLastname(name);
+        return createList(clientList);
     }
 }

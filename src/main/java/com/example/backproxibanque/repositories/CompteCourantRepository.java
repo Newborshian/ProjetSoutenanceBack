@@ -13,7 +13,4 @@ import java.util.List;
 public interface CompteCourantRepository extends JpaRepository<CompteCourant, Integer> {
 
     List<CompteCourant> findByClient_Id(Integer idClient);
-
-
-
 }

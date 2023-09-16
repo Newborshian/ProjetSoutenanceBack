@@ -66,4 +66,8 @@ public class ClientController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("name/{name}")
+    public ResponseEntity<List<ClientDto>> getClientByName(@PathVariable String name){
+        return new ResponseEntity<>(clientServices.getClientByName(name), HttpStatus.OK);
+    }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ClientServices {
 List<ClientDto> getAllClients(Integer id);
-
 ClientDto toDto(Client client);
 
 Client saveClient(ClientDto clientDto);
@@ -20,4 +19,5 @@ ClientDto getClientById(Integer id);
 
 List<ClientDto> createList(List<Client> clientList);
 
+List<ClientDto> getClientByName(String name);
 }

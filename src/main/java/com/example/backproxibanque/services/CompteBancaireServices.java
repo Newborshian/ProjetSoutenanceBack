@@ -4,6 +4,7 @@ import com.example.backproxibanque.dtos.ClientDto;
 import com.example.backproxibanque.dtos.CompteBancaireDto;
 import com.example.backproxibanque.entities.CompteCourant;
 import com.example.backproxibanque.entities.CompteEpargne;
+import com.example.backproxibanque.models.CreateCompteBancaireModel;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public interface CompteBancaireServices {
     CompteEpargne updateCompteEpargne(Integer id, CompteBancaireDto compteBancaireDto);
     CompteBancaireDto getByIdCompteCourant (Integer id);
     CompteBancaireDto getByIdCompteEpargne(Integer id);
-
     List<CompteBancaireDto> getByIdClientComptesBancaires(Integer clientDto);
+    CompteBancaireDto createBankAccount(CreateCompteBancaireModel createCompteBancaireModel);
 
 
     void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme);

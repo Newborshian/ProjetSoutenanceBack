@@ -6,6 +6,8 @@ import com.example.backproxibanque.entities.Client;
 import com.example.backproxibanque.entities.CompteCourant;
 import com.example.backproxibanque.entities.CompteEpargne;
 import com.example.backproxibanque.enums.TypeDeCompte;
+import com.example.backproxibanque.models.CreateCompteBancaireModel;
+import com.example.backproxibanque.repositories.ClientRepository;
 import com.example.backproxibanque.repositories.CompteCourantRepository;
 import com.example.backproxibanque.repositories.CompteEpargneRepository;
 import com.example.backproxibanque.services.CompteBancaireServices;
@@ -25,6 +27,8 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
 
     @Autowired
     private CompteEpargneRepository compteEpargneRepository;
+    @Autowired
+    private ClientRepository clientRepository;
     @Override
     public CompteBancaireDto compteCourantToDto(CompteCourant compteCourant) {
         CompteBancaireDto compteBancaireDto = new CompteBancaireDto();
@@ -89,6 +93,35 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         }
         else throw new RuntimeException("Veuillez affilier des comptes bancaires à ce client");
     }
+
+    @Override
+    public CompteBancaireDto createBankAccount(CreateCompteBancaireModel createCompteBancaireModel) {
+        if (!createCompteBancaireModel.getIsEpargne()){
+            if (clientRepository.existsById(createCompteBancaireModel.getId_client())){
+                CompteCourant compteCourant = new CompteCourant();
+                compteCourant.setNumeroDeCompte(createCompteBancaireModel.getNumerodecompte());
+                compteCourant.setSolde(createCompteBancaireModel.getSolde());
+                compteCourant.setCreatedAt(createCompteBancaireModel.getCreatedat());
+                compteCourant.setClient(clientRepository.findById(createCompteBancaireModel.getId_client()).get());
+                compteCourant.setCard(createCompteBancaireModel.getCard());
+                compteCourant.setOverdraft(createCompteBancaireModel.getOverDraft());
+                compteCourantRepository.save(compteCourant);
+                return compteCourantToDto(compteCourant);
+            } else throw new RuntimeException("Une erreur est survenue lors de la création du compte courant");
+
+
+        } else if (clientRepository.existsById(createCompteBancaireModel.getId_client())){
+            CompteEpargne compteEpargne = new CompteEpargne();
+            compteEpargne.setNumeroDeCompte(createCompteBancaireModel.getNumerodecompte());
+            compteEpargne.setSolde(createCompteBancaireModel.getSolde());
+            compteEpargne.setCreatedAt(createCompteBancaireModel.getCreatedat());
+            compteEpargne.setClient(clientRepository.findById(createCompteBancaireModel.getId_client()).get());
+            compteEpargne.setTauxInteret(createCompteBancaireModel.getTauxInteret());
+            compteEpargneRepository.save(compteEpargne);
+            return compteEpargneToDto(compteEpargne);
+        } else throw new RuntimeException("Une erreur est survenue lors de la création du compte épargne");
+    }
+
 
     @Override
     public void deleteCompteCourantById(Integer id) {

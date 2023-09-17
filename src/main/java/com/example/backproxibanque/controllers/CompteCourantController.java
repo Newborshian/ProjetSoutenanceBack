@@ -4,6 +4,7 @@ import com.example.backproxibanque.dtos.ClientDto;
 import com.example.backproxibanque.dtos.CompteBancaireDto;
 import com.example.backproxibanque.entities.CompteCourant;
 import com.example.backproxibanque.entities.CompteEpargne;
+import com.example.backproxibanque.models.CreateCompteBancaireModel;
 import com.example.backproxibanque.services.CompteBancaireServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,6 +93,16 @@ public class CompteCourantController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors du virement : " + e.getMessage());
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<CompteBancaireDto> creerCompteBancaire(@RequestBody CreateCompteBancaireModel createCompteBancaireModel){
+        try {
+            CompteBancaireDto compteBancaireDto = compteBancaireServices.createBankAccount(createCompteBancaireModel);
+            return new ResponseEntity(compteBancaireDto, HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

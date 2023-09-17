@@ -95,7 +95,7 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     }
 
     @Override
-    public CompteBancaireDto createBankAccount(CreateCompteBancaireModel createCompteBancaireModel) {
+    public CompteBancaireDto createBankAccount(Integer id, CreateCompteBancaireModel createCompteBancaireModel) {
         if (!createCompteBancaireModel.getIsEpargne()){
             if (clientRepository.existsById(createCompteBancaireModel.getId_client())){
                 CompteCourant compteCourant = new CompteCourant();
@@ -126,6 +126,7 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     @Override
     public void deleteCompteCourantById(Integer id) {
         if (compteCourantRepository.findById(id).isPresent()){
+            compteCourantRepository.findByClient_Id(id);
             compteCourantRepository.deleteById(id);
             log.info("Le compte : " + id + " a été supprimé");}
 
@@ -135,6 +136,7 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
     }
     public void deleteCompteEpargneById(Integer id) {
         if (compteEpargneRepository.findById(id).isPresent()){
+            compteEpargneRepository.findByClient_Id(id);
             compteEpargneRepository.deleteById(id);}
         else{
             throw new RuntimeException("l'identifiant du compte Epargne n'a pas été trouvé");

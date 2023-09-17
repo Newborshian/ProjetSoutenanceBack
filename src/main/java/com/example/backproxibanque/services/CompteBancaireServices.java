@@ -19,7 +19,7 @@ public interface CompteBancaireServices {
     CompteBancaireDto getByIdCompteCourant (Integer id);
     CompteBancaireDto getByIdCompteEpargne(Integer id);
     List<CompteBancaireDto> getByIdClientComptesBancaires(Integer clientDto);
-    CompteBancaireDto createBankAccount(CreateCompteBancaireModel createCompteBancaireModel);
+    CompteBancaireDto createBankAccount(Integer clientId , CreateCompteBancaireModel createCompteBancaireModel);
 
 
     void virementCompteCourantToCompteEpargne(Integer idCompteCourant, Integer idCompteEpargne, Double somme);

@@ -82,10 +82,10 @@ public class CompteEpargneController {
                     .body("Erreur lors du virement : " + e.getMessage());
         }
     }
-    @PostMapping
-    public ResponseEntity<CompteBancaireDto> creerCompteBancaire(@RequestBody CreateCompteBancaireModel createCompteBancaireModel){
+    @PostMapping("{id}")
+    public ResponseEntity<CompteBancaireDto> creerCompteBancaire(@PathVariable Integer id, @RequestBody CreateCompteBancaireModel createCompteBancaireModel){
         try {
-            CompteBancaireDto compteBancaireDto = compteBancaireServices.createBankAccount(createCompteBancaireModel);
+            CompteBancaireDto compteBancaireDto = compteBancaireServices.createBankAccount(id ,createCompteBancaireModel);
             return new ResponseEntity(compteBancaireDto, HttpStatus.OK);
         } catch (RuntimeException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

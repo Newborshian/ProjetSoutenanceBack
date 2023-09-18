@@ -51,6 +51,7 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Integer id){
         try{
+            System.out.println("Je suis bien dans la méthode delete client");
             clientServices.deleteClientById(id);
             return new ResponseEntity<>("Le client a été supprimé avec succès",HttpStatus.OK);
         }catch (RuntimeException e){

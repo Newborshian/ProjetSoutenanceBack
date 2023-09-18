@@ -1,8 +1,10 @@
 package com.example.backproxibanque.services.imp;
 
 import com.example.backproxibanque.dtos.ClientDto;
+import com.example.backproxibanque.dtos.CompteBancaireDto;
 import com.example.backproxibanque.entities.Client;
 import com.example.backproxibanque.entities.CompteCourant;
+import com.example.backproxibanque.entities.CompteEpargne;
 import com.example.backproxibanque.entities.Conseiller;
 import com.example.backproxibanque.repositories.ClientRepository;
 import com.example.backproxibanque.repositories.CompteCourantRepository;
@@ -66,9 +68,24 @@ public class ClientServiceImp implements ClientServices {
 
     @Override
     public void deleteClientById(Integer id) {
+
+        System.out.println( "Etape 1" + id);
         if (clientRepository.findById(id).isPresent()){
-            compteCourantRepository.deleteById(id);
-            compteEpargneRepository.deleteById(id);
+
+            System.out.println("Etape 2" + id);
+            List<CompteCourant> compteCourantList = compteCourantRepository.findByClient_Id(id);
+            List<CompteEpargne> compteEpargneList = compteEpargneRepository.findByClient_Id(id);
+
+
+            for(CompteCourant comptecourantDto : compteCourantList){
+                System.out.println("Etape 3" +  id);
+                compteCourantRepository.deleteById(comptecourantDto.getId());
+            }
+            for(CompteEpargne compteEpargneDto : compteEpargneList){
+                System.out.println("Etape 4" + id);
+                compteEpargneRepository.deleteById(compteEpargneDto.getId());
+            }
+
         clientRepository.deleteById(id);
         }
         else{

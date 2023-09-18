@@ -80,19 +80,15 @@ public class CompteBancaireServicesImp implements CompteBancaireServices {
         List<CompteCourant> compteCourantList = compteCourantRepository.findByClient_Id(clientDto);
         List<CompteEpargne> compteEpargneList = compteEpargneRepository.findByClient_Id(clientDto);
 
-        if (!compteEpargneList.isEmpty() || !compteCourantList.isEmpty()){
-            if (!compteCourantList.isEmpty()){
                 for(CompteCourant  compteCourant : compteCourantList ){
                     compteBancaireDtoList.add(compteCourantToDto(compteCourant)) ;
-                }}
-            if (!compteEpargneList.isEmpty()) {
+                }
+
                 for(CompteEpargne  compteEpargne : compteEpargneList ){
                     compteBancaireDtoList.add(compteEpargneToDto(compteEpargne)) ;
-                }}
+                }
             return compteBancaireDtoList;
         }
-        else throw new RuntimeException("Veuillez affilier des comptes bancaires à ce client");
-    }
 
     @Override
     public CompteBancaireDto createBankAccount(Integer id, CreateCompteBancaireModel createCompteBancaireModel) {

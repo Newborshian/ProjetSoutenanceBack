@@ -1,6 +1,7 @@
 package com.example.backproxibanque.services;
 
 import com.example.backproxibanque.dtos.ClientDto;
+import com.example.backproxibanque.dtos.CompteBancaireDto;
 import com.example.backproxibanque.entities.Client;
 
 import java.util.List;
@@ -11,7 +12,7 @@ ClientDto toDto(Client client);
 
 Client saveClient(ClientDto clientDto);
 
-void  deleteClientById(Integer id );
+void  deleteClientById(Integer id);
 
 Client updateClient(Integer id, ClientDto clientDto);
 

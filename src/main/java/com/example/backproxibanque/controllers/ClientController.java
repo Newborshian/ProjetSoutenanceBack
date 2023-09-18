@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -49,13 +51,17 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteClient(@PathVariable Integer id){
-        try{
+    public ResponseEntity<Map<String, String>> deleteClient(@PathVariable Integer id){
+        Map<String, String> response = new HashMap<>();
+
+        try {
             System.out.println("Je suis bien dans la méthode delete client");
             clientServices.deleteClientById(id);
-            return new ResponseEntity<>("Le client a été supprimé avec succès",HttpStatus.OK);
-        }catch (RuntimeException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            response.put("message", "Le client a été supprimé avec succès");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 

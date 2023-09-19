@@ -1,4 +1,4 @@
-# ProjetSoutenanceBack
+```sql
 DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS conseiller CASCADE;
 DROP TABLE IF EXISTS comptecourant CASCADE;
@@ -76,3 +76,4 @@ VALUES
 (0202,200,'05/06/2023','Electron',2000,2),
 (0203,200,'05/06/2023','Visa',2000,3),
 (0204,2000000,'05/06/2018','Visa',2000,4);
+```
